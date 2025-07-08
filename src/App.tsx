@@ -39,7 +39,7 @@ export const App: React.FC = () => {
     })
     .filter(todo => todo.title.includes(isSearch));
 
-  const userId = filtredToDos.filter(todo => todo.id === id);
+  const selectedTodo = filtredToDos.filter(todo => todo.id === id);
 
   return (
     <>
@@ -52,7 +52,7 @@ export const App: React.FC = () => {
               <TodoFilter
                 onChange={setIsFiltred}
                 onSearch={setIsSearch}
-                onReset={setIsSearch}
+                onReset={() => setIsSearch('')}
               />
             </div>
 
@@ -64,7 +64,7 @@ export const App: React.FC = () => {
         </div>
       </div>
 
-      <TodoModal show={show} onClose={setShow} user={userId[0]} />
+      <TodoModal show={show} onClose={setShow} user={selectedTodo[0]} />
     </>
   );
 };

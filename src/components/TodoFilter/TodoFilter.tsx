@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 type Props = {
   onChange: (value: string) => void;
   onSearch: (value: string) => void;
-  onReset: (value: string) => void;
+  onReset: () => void;
 };
 
 export const TodoFilter: React.FC<Props> = ({
@@ -35,7 +35,7 @@ export const TodoFilter: React.FC<Props> = ({
           value={valueInput}
           onChange={e => {
             setValueInput(e.target.value);
-            onSearch(valueInput);
+            onSearch(e.target.value);
           }}
           data-cy="searchInput"
           type="text"
@@ -51,7 +51,7 @@ export const TodoFilter: React.FC<Props> = ({
           {valueInput && (
             <button
               onClick={() => {
-                onReset('');
+                onReset();
                 setValueInput('');
               }}
               data-cy="clearSearchButton"

@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const TodoModal: React.FC<Props> = ({ show, onClose, user }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(show);
   const [person, setPerson] = useState<User | null>(null);
 
@@ -19,13 +19,18 @@ export const TodoModal: React.FC<Props> = ({ show, onClose, user }) => {
     setIsVisible(show);
   }, [show]);
 
-  if (user) {
-    getUser(user.userId).then(setPerson);
-  }
+  useEffect(() => {
+    if (user) {
+      getUser(user.userId).then(setPerson);
+    }
+  }, [user]);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 300);
-  }, [person]);
+    if (show) {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 300);
+    }
+  }, [show]);
 
   return isVisible ? (
     <div className="modal is-active" data-cy="modal">
